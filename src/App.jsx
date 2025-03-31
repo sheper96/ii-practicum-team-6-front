@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { getAllData } from './util/index';
+import NavBar from './components/NavBar';
+
+
 
 const URL = 'http://localhost:8000/api/v1/';
 
-function App() {
+const App = () => {
   
   const [message, setMessage] = useState(''); 
 
@@ -22,6 +25,7 @@ function App() {
 
   return (
     <>
+    <NavBar />
       <h1>{message}</h1>
     </>
   );
