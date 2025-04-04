@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { getAllData } from './util/index';
-import NavBar from './components/NavBar';
+import Header from './components/Header';
+
+
 
 
 
 const URL = 'http://localhost:8000/api/v1/';
 
 const App = () => {
-  
-  const [message, setMessage] = useState(''); 
+
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
 
@@ -16,7 +18,7 @@ const App = () => {
       const myData = await getAllData(URL)
       setMessage(myData.data);
     })();
-      
+
     return () => {
       console.log('unmounting');
     }
@@ -24,12 +26,16 @@ const App = () => {
   }, []);
 
   return (
-    <>
-    <NavBar />
-      <h1>{message}</h1>
-    </>
+    <div>
+      <Header />
+      <main className="p-6">
+        <h1>CodeCrew</h1>
+      </main>
+    </div>
   );
+};
 
-}
+export default App;
 
-export default App
+
+
