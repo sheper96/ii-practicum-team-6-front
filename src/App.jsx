@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAllData } from './util/index';
 import Header from './components/Header';
+ import Hero from './components/Hero';
 
 
 
@@ -28,12 +29,14 @@ const App = () => {
   return (
     <div>
       <Header />
+    <Hero />
       <main className="p-6">
         <h1>CodeCrew</h1>
       </main>
     </div>
   );
 };
+
 
 export default App;
 
