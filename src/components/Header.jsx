@@ -11,11 +11,11 @@ const Header = () => {
 
             {/* Logo */}
             <div className="flex items-center space-x-2">
-                <img src={logo} alt="CodeCrew Logo" className="w-8 h-8"/>
-            <div className="text-2xl font-bold">CodeCrew</div>
-</div>
+                <img src={logo} alt="CodeCrew Logo" className="w-8 h-8" />
+                <div className="text-2xl font-bold">CodeCrew</div>
+            </div>
 
-            
+
 
             {/* Nav */}
             <nav className="flex items-center gap-4">
