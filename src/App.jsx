@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAllData } from './util/index';
 import Header from './components/Header';
- import Hero from './components/Hero';
+import Hero from './components/Hero';
 
 
 
@@ -16,20 +16,20 @@ const App = () => {
   useEffect(() => {
 
     (async () => {
-      const myData = await getAllData(URL)
+      const myData = await getAllData(URL);
       setMessage(myData.data);
     })();
 
     return () => {
       console.log('unmounting');
-    }
+    };
 
   }, []);
 
   return (
     <div>
       <Header />
-    <Hero />
+      <Hero />
       <main className="p-6">
         <h1>CodeCrew</h1>
       </main>
