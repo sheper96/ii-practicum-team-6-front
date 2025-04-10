@@ -8,6 +8,7 @@ import SignIn from './pages/SignIn';
 import Register from './pages/Register';
 import BrowseProjects from './pages/BrowseProjects';
 import Layout from './components/Layout';
+import Footer from './components/Footer';
 
 
 const URL = 'http://localhost:8000/api/v1/';
@@ -41,6 +42,7 @@ const App = () => {
           <Route path="/projects" element={<BrowseProjects />} />
         </Routes>
       </Layout>
+      <Footer />
     </>
   );
 };
