@@ -1,5 +1,6 @@
 import React from 'react';
-import Header from 'src/components/Header'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 
 const Layout = ({ children, className = '' }) => {
@@ -9,7 +10,7 @@ const Layout = ({ children, className = '' }) => {
             <main className={`flex-grow ${className}`}>
                 {children}
             </main>
-
+            <Footer />
         </div>
     );
 };
