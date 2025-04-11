@@ -3,15 +3,15 @@ import { FaGithub } from 'react-icons/fa';
 
 const Footer = () => {
   const teamMembers = [
-    { name: 'Roman', github: 'https://github.com/brrr123' },
-    { name: 'Valery', github: 'https://github.com/sheper96' },
     { name: 'Daria', github: 'https://github.com/DariaPavlyuk81' },
-    { name: 'Masooma', github: 'https://github.com/JafariM' },
     { name: 'John', github: 'https://github.com/canilo1' },
+    { name: 'Masooma', github: 'https://github.com/JafariM' },
+    { name: 'Roman', github: 'https://github.com/brrr123' },
+    { name: 'Valery', github: 'https://github.com/sheper96' }
   ];
 
   return (
-    <footer className="bg-white border-t border-gray-200">
+    <footer className="bg-gray-100 border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
 
