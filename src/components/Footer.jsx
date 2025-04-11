@@ -2,63 +2,44 @@ import React from 'react';
 import { FaGithub } from 'react-icons/fa';
 
 const Footer = () => {
-  return (
-    <footer className="w-full bg-gradient-to-t from-gray-100 to-gray-300 text-center py-4 text-gray-700 border-t border-gray-300">
-      <p className="text-sm">
-        &copy; {new Date().getFullYear()} CodeCrew.
-      </p>
+  const teamMembers = [
+    { name: 'Roman', github: 'https://github.com/brrr123' },
+    { name: 'Valery', github: 'https://github.com/sheper96' },
+    { name: 'Daria', github: 'https://github.com/DariaPavlyuk81' },
+    { name: 'Masooma', github: 'https://github.com/JafariM' },
+    { name: 'John', github: 'https://github.com/canilo1' },
+  ];
 
-      {/* GitHub Profiles */}
-      <div className="flex justify-center items-center gap-4">
-        <a
-          href="https://github.com/brrr123"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1 hover:text-black transition"
-        >
-          <FaGithub className="text-xl" />
-          <span className="text-sm">Roman</span>
-        </a>
-        <a
-          href="https://github.com/sheper96"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1 hover:text-black transition"
-        >
-          <FaGithub className="text-xl" />
-          <span className="text-sm">Valery</span>
-        </a>
-        <a
-          href="https://github.com/DariaPavlyuk81"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1 hover:text-black transition"
-        >
-          <FaGithub className="text-xl" />
-          <span className="text-sm">Daria</span>
-        </a>
-        <a
-          href="https://github.com/JafariM"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1 hover:text-black transition"
-        >
-          <FaGithub className="text-xl" />
-          <span className="text-sm">Masooma</span>
-        </a>
-        <a
-          href="https://github.com/canilo1"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1 hover:text-black transition"
-        >
-          <FaGithub className="text-xl" />
-          <span className="text-sm">John</span>
-        </a>
+  return (
+    <footer className="bg-white border-t border-gray-200">
+      <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center">
+
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-5">
+            {teamMembers.map((member) => (
+              <a
+                key={member.name}
+                href={member.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center group"
+              >
+                <FaGithub className="w-6 h-6 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                <span className="mt-2 text-sm text-gray-500 group-hover:text-gray-700">
+                  {member.name}
+                </span>
+              </a>
+            ))}
+          </div>
+
+          <div className="flex items-center space-x-2 mb-8 pt-8">
+            &copy; {new Date().getFullYear()} CodeCrew.
+          </div>
+
+        </div>
       </div>
     </footer>
   );
-
 };
 
 export default Footer;
