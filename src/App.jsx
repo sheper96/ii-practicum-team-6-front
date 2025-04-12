@@ -6,6 +6,7 @@ import SignIn from './pages/SignIn';
 import Register from './pages/Register';
 import BrowseProjects from './pages/BrowseProjects';
 import CodeCrewLayout from './layouts/CodeCrewLayout';
+import ForgotPassword from './pages/ForgotPassword';
 
 
 const URL = 'http://localhost:8000/api/v1/';
@@ -27,17 +28,18 @@ const App = () => {
 
   }, []);
 
-return (
-            <CodeCrewLayout>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/signin" element={<SignIn />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/projects" element={<BrowseProjects />} />
-              </Routes>
-            </CodeCrewLayout>
-          );
-        };
+  return (
+    <CodeCrewLayout>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/projects" element={<BrowseProjects />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+      </Routes>
+    </CodeCrewLayout>
+  );
+};
 
 export default App;
 
