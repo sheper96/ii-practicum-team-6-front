@@ -50,9 +50,9 @@ const SignIn = () => {
               </label>
 
             </div>
-            <a href="#" className="text-sm text-blue-700 hover:underline">
-              Lost Password
-            </a>
+            <Link to="/forgot-password" className="text-sm text-blue-700 hover:underline">
+              Forgot Password?
+            </Link>
           </div>
 
           <button
