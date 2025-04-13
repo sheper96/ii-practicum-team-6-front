@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ProjectCard from '../components/ProjectCard.jsx'
 
 const BrowseProjects = () => {
+    const [searchQuery, setSearchQuery] = useState('');
     const [projects, setProjects] = useState([
         {
             id: 1,
@@ -55,12 +56,25 @@ const BrowseProjects = () => {
     const handleCardClick = (id) => {
         navigate(`/projects/${id}`);
     };
+    const filteredProjects = projects.filter(project =>
+        project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
   return (
       <section className="  py-8 px-4">
+          <div className="max-w-2xl mx-auto mb-8">
+              <input
+                  type="text"
+                  placeholder="Search projects..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+          </div>
           <div className="flex justify-center">
               <div className="max-w-full overflow-x-auto pb-6 scrollbar-hide">
                   <div className="flex space-x-6 px-4 justify-center">
-                      {projects.map((project, index) => (
+                      {filteredProjects.map((project, index) => (
                           <div
                               key={project.id}
                               className={`${index > 0 ? 'hidden' : ''} sm:block ${index > 1 ? 'sm:hidden' : ''} md:block`}
