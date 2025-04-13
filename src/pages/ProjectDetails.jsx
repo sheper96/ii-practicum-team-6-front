@@ -25,6 +25,12 @@ const ProjectDetails = () =>{
                 <div className="flex justify-between items-start mb-6">
                     <h1 className="text-3xl font-bold text-gray-800">{project.title}</h1>
                 </div>
+                <div className="space-y-6">
+                    <div>
+                        <h2 className="text-xl font-semibold text-gray-800 mb-2">Description</h2>
+                        <p className="text-gray-600">{project.longDescription}</p>
+                    </div>
+                </div>
             </div>
         </div>
     )
