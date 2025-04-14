@@ -17,7 +17,7 @@ const Profile = () => {
             alt="Profile Avatar"
             className="w-24 h24 rounded-full border-2 border-gray-300 shadow-md"
           />
-          <h2 className="text-2xl font-semibold">{user.name}</h2>
+          <h2 className="text-2xl font-semibold">{user.firstname} {user.lastname}</h2>
           <p className="text-gray-600">{user.email}</p>
           <button className="mt-4 px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800 transition">
             Edit Profile
