@@ -1,12 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useUser } from '../components/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 
 const SignIn = () => {
+  const { setUser } = useUser();
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+
+    // Simulate login
+
+    const fakeUser = { name: 'John Doe', email: 'john@example.com' };
+    setUser(fakeUser);
+    navigate('/profile');
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen  px-4">
       <div className="w-full max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8">
-        <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <h5 className="text-xl font-medium text-gray-900">Sign in</h5>
 
           <div>
@@ -65,7 +80,7 @@ const SignIn = () => {
             Not Registered?{' '}
             <Link to="/register" className="text-blue-700 hover:underline">
               Create Account
-              </Link>
+            </Link>
 
           </div>
         </form>

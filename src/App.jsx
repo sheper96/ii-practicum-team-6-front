@@ -8,6 +8,8 @@ import BrowseProjects from './pages/BrowseProjects';
 import ProjectDetails from './pages/ProjectDetails';
 import CodeCrewLayout from './layouts/CodeCrewLayout';
 import ForgotPassword from './pages/ForgotPassword';
+import Profile from './pages/Profile';
+import { UserProvider } from './components/UserContext';
 
 
 const URL = 'http://localhost:8000/api/v1/';
@@ -30,16 +32,19 @@ const App = () => {
   }, []);
 
   return (
-    <CodeCrewLayout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/projects" element={<BrowseProjects />} />
-        <Route path="/projects/:id" element={<ProjectDetails />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-      </Routes>
-    </CodeCrewLayout>
+    <UserProvider>
+      <CodeCrewLayout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/projects" element={<BrowseProjects />} />
+          <Route path="/projects/:id" element={<ProjectDetails />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </CodeCrewLayout>
+    </UserProvider>
   );
 };
 
