@@ -13,7 +13,18 @@ const SignIn = () => {
 
     // Simulate login
 
-    const fakeUser = { name: 'John Doe', email: 'john@example.com' };
+    const fakeUser = {
+      username: 'johndoe112',
+      email: 'john@example.com',
+      avatar: 'https://i.pravatar.cc/150?img=47',
+      bio: '',
+      skills: ['React', 'Node.js'],
+      projectsID: [],
+      _id: '',
+      createdAt: '',
+      updatedAt: ''
+    };
+
     setUser(fakeUser);
     navigate('/profile');
   };

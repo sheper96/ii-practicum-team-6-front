@@ -1,11 +1,39 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+
+    // a regitration API call here
+
+    const newUser = {
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+    };
+
+    localStorage.setItem('user', JSON.stringify(newUser)); //local storage
+    navigate('/profile');
+
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-b  px-4">
       <div className="w-full max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8">
-        <form className="space-y-6" onSubmit={(e => e.preventDefault())}>
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <h5 className="text-xl font-medium text-gray-900">Create an account</h5>
 
 
@@ -17,13 +45,15 @@ const Register = () => {
               type="text"
               name="firstName"
               id="firstName"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
               placeholder="John"
               required
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             />
           </div>
 
-          <div> 
+          <div>
             <label htmlFor="lastName" className="block mb-2 text-sm font-medium text-gray-900">
               Last Name
             </label>
@@ -31,6 +61,8 @@ const Register = () => {
               type="text"
               name="lastName"
               id="lastName"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
               placeholder="Doe"
               required
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -46,6 +78,8 @@ const Register = () => {
               type="text"
               name="username"
               id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               placeholder="Your username"
               required
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -61,6 +95,8 @@ const Register = () => {
               type="email"
               name="email"
               id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="name@company.com"
               required
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -75,6 +111,8 @@ const Register = () => {
               type="password"
               name="password"
               id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="......."
               required
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
