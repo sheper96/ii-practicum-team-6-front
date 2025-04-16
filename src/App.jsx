@@ -10,6 +10,7 @@ import CodeCrewLayout from './layouts/CodeCrewLayout';
 import ForgotPassword from './pages/ForgotPassword';
 import Profile from './pages/Profile';
 import { UserProvider } from './components/UserContext';
+import EditProfile from './pages/EditProfile';
 
 
 const URL = 'http://localhost:8000/api/v1/';
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/projects/:id" element={<ProjectDetails />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
         </Routes>
       </CodeCrewLayout>
     </UserProvider>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useUser } from '../components/UserContext';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
 
@@ -26,9 +27,15 @@ const Profile = () => {
           <h2 className="text-2xl font-semibold">{user.firstName} {user.lastName}</h2>
           <p className="text-gray-600">{user.email}</p>
           {user.bio && <p className="text-gray-500 text-sm">{user.bio}</p>}
-          <button className="mt-4 px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800 transition">
+          {/* <button className="mt-4 px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800 transition">
             Edit Profile
-          </button>
+          </button> */}
+          <Link
+  to="/edit-profile"
+  className="mt-4 px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800 transition"
+>
+  Edit Profile
+</Link>
         </div>
       </div>
     </div>
