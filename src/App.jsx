@@ -44,6 +44,7 @@ const App = () => {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/browse-projects" element={<BrowseProjects />} />
         </Routes>
       </CodeCrewLayout>
     </UserProvider>
