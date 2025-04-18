@@ -1,5 +1,6 @@
 import React from "react";
 import { useUser } from '../components/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 
 const UserProfile = () => {
@@ -18,6 +19,13 @@ const UserProfile = () => {
     photo,
   } = user;
 
+  const navigate = useNavigate();
+
+  const handleEditProfile = () => {
+    navigate('/profile'); // assuming your Register.jsx is rendered at this route
+  };
+
+
   return (
     <div className="bg-gradient-to-r from-indigo-800 to-blue-900 min-h-screen flex items-center justify-center p-4">
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full p-8 transition-all duration-300 animate-fade-in">
@@ -31,7 +39,9 @@ const UserProfile = () => {
             />
             <h1 className="text-2xl font-bold text-indigo-800 dark:text-white mb-2">{firstName} {lastName}</h1>
             <p className="text-gray-600 dark:text-gray-300">@{username}</p>
-            <button className="mt-4 bg-indigo-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition-colors duration-300">
+            <button
+              onClick={handleEditProfile}
+              className="mt-4 bg-indigo-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition-colors duration-300">
               Edit Profile
             </button>
           </div>
