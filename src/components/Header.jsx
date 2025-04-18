@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../image/Code.png';
 import { useUser } from '../components/UserContext';
-import { useNavigate } from 'react-router-dom';
 import UserDropdown from './UserDropdown';
 
 
