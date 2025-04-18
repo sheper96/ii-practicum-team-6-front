@@ -11,6 +11,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import Profile from './pages/Profile';
 import { UserProvider } from './components/UserContext';
 import EditProfile from './pages/EditProfile';
+import UserProfile from './pages/UserProfile';
 
 
 const URL = 'http://localhost:8000/api/v1/';
@@ -45,6 +46,7 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/browse-projects" element={<BrowseProjects />} />
+          <Route path="/my-profile" element={<UserProfile/>} />
         </Routes>
       </CodeCrewLayout>
     </UserProvider>
