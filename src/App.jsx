@@ -10,7 +10,6 @@ import CodeCrewLayout from './layouts/CodeCrewLayout';
 import ForgotPassword from './pages/ForgotPassword';
 import Profile from './pages/Profile';
 import { UserProvider } from './components/UserContext';
-import EditProfile from './pages/EditProfile';
 import UserProfile from './pages/UserProfile';
 
 
@@ -44,7 +43,6 @@ const App = () => {
           <Route path="/projects/:id" element={<ProjectDetails />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/browse-projects" element={<BrowseProjects />} />
           <Route path="/my-profile" element={<UserProfile/>} />
         </Routes>
