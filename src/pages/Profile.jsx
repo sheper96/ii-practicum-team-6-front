@@ -1,213 +1,131 @@
-import React, { useState } from 'react';
+import React from "react";
+import { useUser } from '../components/UserContext';
 import { useNavigate } from 'react-router-dom';
 
+
 const Profile = () => {
+  const { user } = useUser();
+
+  if (!user) return null;
+
+  const {
+    username,
+    firstName,
+    lastName,
+    email,
+    country,
+    bio,
+    skills = [],
+    photo,
+  } = user;
+
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    username: '',
-    about: '',
-    skills: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    country: 'United States',
-    streetAddress: '',
-    city: '',
-    region: '',
-    postalCode: '',
-    photo: null, // for the profile photo
-    coverPhoto: null, // for the cover photo
-  });
-
-
-
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  const handleEditProfile = () => {
+    navigate('/edit-profile'); // assuming your Register.jsx is rendered at this route
   };
 
-  const handleFileChange = (e, field) => {
-    const file = e.target.files[0];
-    setFormData((prevData) => ({
-      ...prevData,
-      [field]: file,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-
-
-    navigate('/browse-projects');
-  };
 
   return (
-    <div className="max-w-4xl mx-auto px-6">
-      <form onSubmit={handleSubmit}>
-        <div className="space-y-12">
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold text-gray-900">Profile</h2>
-            <p className="mt-1 text-sm text-gray-600">Complete your profile to get matched with the right projects.</p>
+    <div className="bg-gradient-to-r from-indigo-800 to-blue-900 min-h-screen flex items-center justify-center p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full p-8 transition-all duration-300 animate-fade-in">
+        <div className="flex flex-col md:flex-row w-full">
 
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-4">
-                <label htmlFor="username" className="block text-sm font-medium text-gray-900">Username</label>
-                <div className="mt-2">
-                  <div className="flex items-center rounded-md bg-white pl-3 outline-1 outline-gray-300 focus-within:outline-2 focus-within:outline-indigo-600">
-                    <div className="shrink-0 text-base text-gray-500 select-none sm:text-sm">workcation.com/</div>
-                    <input
-                      type="text"
-                      name="username"
-                      id="username"
-                      className="block w-full py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm"
-                      placeholder="janesmith"
-                      value={formData.username}
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
-              </div>
+          <div className="md:w-1/3 text-center mb-8 md:mb-0">
+            <img
+              src={photo || "https://i.pravatar.cc/300"}
+              alt="Profile"
+              className="rounded-full w-48 h-48 mx-auto mb-4 border-4 border-indigo-800 dark:border-blue-900 transition-transform duration-300 hover:scale-105"
+            />
+            <h1 className="text-2xl font-bold text-indigo-800 dark:text-white mb-2">{firstName} {lastName}</h1>
+            <p className="text-gray-600 dark:text-gray-300">@{username}</p>
+            <button
+              onClick={handleEditProfile}
+              className="mt-4 bg-indigo-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition-colors duration-300">
+              Edit Profile
+            </button>
+          </div>
 
-              {/* First and Last Name Fields */}
-              <div className="sm:col-span-3">
-                <label htmlFor="firstName" className="block text-sm font-medium text-gray-900">First name</label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="firstName"
-                    id="firstName"
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
-                    value={formData.firstName}
-                    onChange={handleChange}
+          <div className="md:w-2/3 md:pl-8">
+            <h2 className="text-xl font-semibold text-indigo-800 dark:text-white mb-4">
+              About Me
+            </h2>
+            <p className="text-gray-700 dark:text-gray-300 mb-6 whitespace-pre-wrap">
+              {bio}
+            </p>
+
+            <h2 className="text-xl font-semibold text-indigo-800 dark:text-white mb-4">
+              Skills
+            </h2>
+            <div className="flex flex-wrap gap-2 mb-6">
+              {skills.map((skill, index) => (
+                <span
+                  key={index}
+                  className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm hover:bg-blue-900 hover:text-white transition-all duration-300"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+            <h2 className="text-xl font-semibold text-indigo-800 dark:text-white mb-4">
+              Contact Information
+            </h2>
+            <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+              <li className="flex items-center">
+                <svg
+                  className="h-5 w-5 mr-2 text-indigo-800 dark:text-blue-900"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                </svg>
+                {email}
+              </li>
+              <li className="flex items-center">
+                <svg
+                  className="h-5 w-5 mr-2 text-indigo-800 dark:text-blue-900"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                </svg>
+                +1 (555) 123-4567
+              </li>
+              <li className="flex items-center">
+                <svg
+                  className="h-5 w-5 mr-2 text-indigo-800 dark:text-blue-900"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clipRule="evenodd"
                   />
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label htmlFor="lastName" className="block text-sm font-medium text-gray-900">Last name</label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="lastName"
-                    id="lastName"
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-
-              {/* Email and Country Fields */}
-              <div className="sm:col-span-4">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-900">Email address</label>
-                <div className="mt-2">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
-                    value={formData.email}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label htmlFor="country" className="block text-sm font-medium text-gray-900">Country</label>
-                <div className="mt-2">
-                  <select
-                    id="country"
-                    name="country"
-                    className="w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
-                    value={formData.country}
-                    onChange={handleChange}
-                  >
-                    <option>United States</option>
-                    <option>Canada</option>
-                    <option>Mexico</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* About Section */}
-          <div className="col-span-full">
-            <label htmlFor="about" className="block text-sm font-medium text-gray-900">About</label>
-            <div className="mt-2">
-              <textarea
-                name="about"
-                id="about"
-                rows="3"
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
-                value={formData.about}
-                onChange={handleChange}
-              />
-            </div>
-            <p className="mt-3 text-sm text-gray-600">Write a few sentences about yourself.</p>
-          </div>
-
-          {/* Skills Section */}
-          <div className="col-span-full">
-            <label htmlFor="skills" className="block text-sm font-medium text-gray-900">Skills</label>
-            <div className="mt-2">
-              <textarea
-                name="skills"
-                id="skills"
-                rows="3"
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
-                value={formData.skills}
-                onChange={handleChange}
-              />
-            </div>
-            <p className="mt-3 text-sm text-gray-600">Impress your teammates with your skills.</p>
-          </div>
-
-          {/* Profile Photo */}
-          <div className="col-span-full">
-            <label htmlFor="photo" className="block text-sm font-medium text-gray-900">Profile Photo</label>
-            <div className="mt-2 flex items-center gap-x-3">
-              <input
-                type="file"
-                id="photo"
-                name="photo"
-                accept="image/*"
-                onChange={(e) => handleFileChange(e, 'photo')}
-              />
-              {formData.photo && <span>{formData.photo.name}</span>}
-            </div>
-          </div>
-
-          {/* Cover Photo */}
-          <div className="col-span-full">
-            <label htmlFor="coverPhoto" className="block text-sm font-medium text-gray-900">Cover Photo</label>
-            <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-              <div className="text-center">
-                <input
-                  type="file"
-                  id="coverPhoto"
-                  name="coverPhoto"
-                  accept="image/*"
-                  onChange={(e) => handleFileChange(e, 'coverPhoto')}
-                />
-                {formData.coverPhoto && <span>{formData.coverPhoto.name}</span>}
-              </div>
-            </div>
+                </svg>
+                {country}
+              </li>
+            </ul>
           </div>
         </div>
+      </div>
 
-        <div className="mt-10 flex items-center justify-end gap-x-6">
-          <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white">Save</button>
-        </div>
-      </form>
+      <style>
+        {`
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+          }
+        `}
+      </style>
     </div>
   );
 };
 
 export default Profile;
+
+
