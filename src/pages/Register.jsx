@@ -26,7 +26,7 @@ const Register = () => {
 
     localStorage.setItem('user', JSON.stringify(newUser)); //local storage
     setUser(newUser);
-    navigate('/profile');
+    navigate('/edit-profile');
 
   };
 
