@@ -203,7 +203,6 @@ const Profile = () => {
         </div>
 
         <div className="mt-10 flex items-center justify-end gap-x-6">
-          <button type="button" className="text-sm font-semibold text-gray-900">Cancel</button>
           <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white">Save</button>
         </div>
       </form>
