@@ -2,7 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
 import ProjectCard from '../components/ProjectCard.jsx';
-import { FiRefreshCcw } from 'react-icons/fi';
+import { FiRefreshCcw, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+
 
 const BrowseProjects = () => {
     const DEFAULT_SORT = { value: 'newest', label: 'Newest' };
@@ -183,6 +184,27 @@ const BrowseProjects = () => {
                             </div>
                         ))}
                     </div>
+                </div>
+            </div>
+
+            <div className="flex justify-center mt-8">
+                <div className="flex items-center space-x-2">
+                    <button className="p-2 rounded-md text-gray-700 hover:bg-gray-100">
+                        <FiChevronLeft className="h-5 w-5"/>
+                    </button>
+
+
+                    <button className="px-3 py-1 rounded-md bg-blue-500 text-white">
+                        1
+                    </button>
+
+                    <button className="px-3 py-1 rounded-md text-gray-700 hover:bg-gray-100">
+                        2
+                    </button>
+
+                    <button className="p-2 rounded-md text-gray-700 hover:bg-gray-100">
+                        <FiChevronRight className="h-5 w-5"/>
+                    </button>
                 </div>
             </div>
         </section>
