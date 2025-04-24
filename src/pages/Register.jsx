@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../components/UserContext';
+import API_URL from '../config';
 
 const Register = () => {
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
 
 
   const navigate = useNavigate();
@@ -14,21 +17,51 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
 
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
 
-    // a regitration API call here
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("Invalid email address");
+      return;
+    }
 
-    const newUser = {
-      username,
-      email,
-      password,
-    };
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters long");
+      return;
+    }
+    try {
+      const response = await fetch(`${API_URL}register`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          confirmPassword
+        }),
+      });
 
-    localStorage.setItem('user', JSON.stringify(newUser)); //local storage
-    setUser(newUser);
-    navigate('/edit-profile');
+      const data = await response.json();
 
+      if (!response.ok) {
+        throw new Error(data.message || "Something went wrong");
+
+      }
+
+      localStorage.setItem('user', JSON.stringify(data.user));
+      setUser(data.user);
+      navigate('/edit-profile');
+    } catch (err) {
+      setError(err.message);
+    }
   };
+
 
 
   return (
@@ -86,6 +119,26 @@ const Register = () => {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             />
           </div>
+
+          <div>
+            <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-gray-900">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              name="confirmPassword"
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="......."
+              required
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            />
+          </div>
+
+          {error && (
+            <div className="text-red-500 text-sm text-center">{error}</div>
+          )}
 
 
           <button

@@ -13,18 +13,22 @@ import { UserProvider } from './components/UserContext';
 import Profile from './pages/Profile';
 
 
-const URL = 'http://localhost:8000/api/v1/';
+const API_URL = 'http://localhost:3000/api/auth/';
 
 const App = () => {
-
-  const [message, setMessage] = useState('');
+const [message, setMessage] = useState('');
 
   useEffect(() => {
+(async () => {
+  try{
+    const myData = await getAllData(API_URL);
+    setMessage(myData.data || 'No data avaialable');
+  } catch (err) {
+    console.error('Error fetching data:', err.message);
+    setMessage('Failed to load data.')
+  }
+})();
 
-    (async () => {
-      const myData = await getAllData(URL);
-      setMessage(myData.data);
-    })();
 
     return () => {
       console.log('unmounting');

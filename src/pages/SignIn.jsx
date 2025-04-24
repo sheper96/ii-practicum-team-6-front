@@ -2,35 +2,53 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '../components/UserContext';
 import { useNavigate } from 'react-router-dom';
-
+import API_URL from '../config';
 
 const SignIn = () => {
-
   const { setUser } = useUser();
- const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  // handle submit function is async so it can use await
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
 
-    // Simulate login
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
-    const fakeUser = {
-      username: 'johndoe112',
-      email: 'john@example.com',
-      avatar: 'https://i.pravatar.cc/150?img=47',
-      bio: '',
-      skills: ['React', 'Node.js'],
-      projectsID: [],
-      _id: '',
-      createdAt: '',
-      updatedAt: ''
-    };
+    try {
+      const res = await fetch(`${API_URL}login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    setUser(fakeUser);
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || 'Login Failed');
+      };
 
-    navigate('/');
+      // Store JWT token
+      localStorage.setItem('token', data.token);
+      console.log('JWT Token:', data.token);
 
+      // store user in content
+      setUser(data.user);
+
+      // Navigate to HomePage
+      navigate('/');
+    } catch (err) {
+      console.error('Login error:', err.message);
+      setError(err.message);
+    }
   };
+
+
+
+
 
   return (
     <div className="flex justify-center items-center min-h-screen  px-4">
