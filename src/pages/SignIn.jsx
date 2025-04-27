@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '../components/UserContext';
 import { useNavigate } from 'react-router-dom';
-import API_URL from '../config';
+import API_AUTH_URL from '../config';
 
 const SignIn = () => {
   const { setUser } = useUser();
@@ -18,25 +18,38 @@ const SignIn = () => {
     const password = e.target.password.value;
 
     try {
-      const res = await fetch(`${API_URL}login`, {
+      const res = await fetch(`${API_AUTH_URL}login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password })
+
       });
 
+
       const data = await res.json();
+
       if (!res.ok) {
         throw new Error(data.message || 'Login Failed');
       };
 
       // Store JWT token
-      localStorage.setItem('token', data.token);
-      console.log('JWT Token:', data.token);
+      if (data.token) {
+        localStorage.setItem('token', data.token);
 
+      }
       // store user in content
-      setUser(data.user);
+
+      if (data.user) {
+
+        setUser(data.user);
+
+      } else if (data.data?.user) { // Handle nested user data
+        setUser(data.data.user);
+
+      }
 
       // Navigate to HomePage
       navigate('/');

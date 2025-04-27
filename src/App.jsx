@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { getAllData } from './util/index';
+//import { getAllData } from './util/index';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import Register from './pages/Register';
@@ -13,28 +13,28 @@ import { UserProvider } from './components/UserContext';
 import Profile from './pages/Profile';
 
 
-const API_URL = 'http://localhost:3000/api/auth/';
+//const API_AUTH_URL = 'http://localhost:3000/api/auth/';
 
 const App = () => {
-const [message, setMessage] = useState('');
+// const [message, setMessage] = useState('');
 
-  useEffect(() => {
-(async () => {
-  try{
-    const myData = await getAllData(API_URL);
-    setMessage(myData.data || 'No data avaialable');
-  } catch (err) {
-    console.error('Error fetching data:', err.message);
-    setMessage('Failed to load data.')
-  }
-})();
+//   useEffect(() => {
+// (async () => {
+//   try{
+//     const myData = await getAllData(API_AUTH_URL);
+//     setMessage(myData.data || 'No data avaialable');
+//   } catch (err) {
+//     console.error('Error fetching data:', err.message);
+//     setMessage('Failed to load data.')
+//   }
+// })();
 
 
-    return () => {
-      console.log('unmounting');
-    };
+//     return () => {
+//       console.log('unmounting');
+//     };
 
-  }, []);
+//   }, []);
 
   return (
     <UserProvider>
