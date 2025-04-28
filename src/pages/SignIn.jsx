@@ -2,35 +2,66 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '../components/UserContext';
 import { useNavigate } from 'react-router-dom';
-
+import API_AUTH_URL from '../config';
 
 const SignIn = () => {
-
   const { setUser } = useUser();
- const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  // handle submit function is async so it can use await
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
 
-    // Simulate login
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
-    const fakeUser = {
-      username: 'johndoe112',
-      email: 'john@example.com',
-      avatar: 'https://i.pravatar.cc/150?img=47',
-      bio: '',
-      skills: ['React', 'Node.js'],
-      projectsID: [],
-      _id: '',
-      createdAt: '',
-      updatedAt: ''
-    };
+    try {
+      const response = await fetch(`${API_AUTH_URL}login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
 
-    setUser(fakeUser);
+      });
+      console.log('Response:', response);
 
-    navigate('/');
+      
+      const body = await response.json();
+      console.log('Body:', body);
 
+
+      if (!body.success) {
+        throw new Error(data.message || 'Login Failed');
+      };
+
+
+      const data = body.data;
+      console.log('data:', data);
+      const user = data.user;
+      console.log('user:', user);
+
+      setUser(user);
+      if (body.data?.user) {
+        setUser(body.data.user);
+        navigate('/');
+      } else {
+        throw new Error(bosy.message || 'Login Failed');
+      }
+
+
+    } catch (err) {
+      console.error('Login error:', err.message);
+      setError(err.message);
+    }
   };
+
+
+
+
 
   return (
     <div className="flex justify-center items-center min-h-screen  px-4">
