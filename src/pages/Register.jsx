@@ -48,16 +48,22 @@ const Register = () => {
         }),
       });
 
-      const data = await response.json();
+
+
+      const body = await response.json();
+      console.log('Response:', response);
+
+      console.log('Body:', body);
 
       if (!response.ok) {
-        throw new Error(data.message || "Something went wrong");
+        throw new Error(body.message || "Something went wrong");
 
       }
 
-      localStorage.setItem('user', JSON.stringify(data.user));
-      setUser(data.user);
+      localStorage.setItem('user', JSON.stringify(body.user));
+      setUser(body.user);
       navigate('/edit-profile');
+
     } catch (err) {
       setError(err.message);
     }

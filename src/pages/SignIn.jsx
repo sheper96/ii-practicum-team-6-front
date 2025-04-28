@@ -18,7 +18,7 @@ const SignIn = () => {
     const password = e.target.password.value;
 
     try {
-      const res = await fetch(`${API_AUTH_URL}login`, {
+      const response = await fetch(`${API_AUTH_URL}login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,32 +27,32 @@ const SignIn = () => {
         body: JSON.stringify({ email, password })
 
       });
+      console.log('Response:', response);
+
+      
+      const body = await response.json();
+      console.log('Body:', body);
 
 
-      const data = await res.json();
-
-      if (!res.ok) {
+      if (!body.success) {
         throw new Error(data.message || 'Login Failed');
       };
 
-      // Store JWT token
-      if (data.token) {
-        localStorage.setItem('token', data.token);
 
-      }
-      // store user in content
+      const data = body.data;
+      console.log('data:', data);
+      const user = data.user;
+      console.log('user:', user);
 
-      if (data.user) {
-
-        setUser(data.user);
-
-      } else if (data.data?.user) { // Handle nested user data
-        setUser(data.data.user);
-
+      setUser(user);
+      if (body.data?.user) {
+        setUser(body.data.user);
+        navigate('/');
+      } else {
+        throw new Error(bosy.message || 'Login Failed');
       }
 
-      // Navigate to HomePage
-      navigate('/');
+
     } catch (err) {
       console.error('Login error:', err.message);
       setError(err.message);
