@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../components/UserContext';
+import API_AUTH_URL from '../config';
 
 const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,9 +10,39 @@ const UserDropdown = () => {
   const navigate = useNavigate();
 
 
-  const handleLogout = () => {
-    setUser(null);
-    navigate('/');
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(`${API_AUTH_URL}logout`, {
+        method: 'POST',
+        credentials: 'include',
+
+        headers: {
+          'Content-Type': 'application/json',
+
+        },
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        const data = await response.json();
+        console.warn('Logout warning:', data.message);
+      }
+
+
+      setUser(null);
+
+      navigate('/');
+      //window.location.href = '/';
+
+
+    } catch (err) {
+      console.error('Logout Error:', err.message);
+      setUser(null);
+    
+      navigate('/');
+      //window.location.href = '/';
+    }
   };
 
   // close dropdown if clicked outside
@@ -58,7 +89,7 @@ const UserDropdown = () => {
             >
               My Profile
             </Link>
-            
+
             <button
               onClick={handleLogout}
               className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
