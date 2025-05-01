@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Routes, Route} from 'react-router-dom';
-import {getAllData} from './util/index';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import Register from './pages/Register';
@@ -14,24 +13,10 @@ import Profile from './pages/Profile';
 import SubmitProject from './pages/SubmitProject.jsx';
 
 
-const URL = 'http://localhost:8000/api/v1/';
+
 
 const App = () => {
 
-  const [message, setMessage] = useState('');
-
-  useEffect(() => {
-
-    (async () => {
-      const myData = await getAllData(URL);
-      setMessage(myData.data);
-    })();
-
-    return () => {
-      console.log('unmounting');
-    };
-
-  }, []);
 
   return (
       <UserProvider>
