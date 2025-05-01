@@ -12,12 +12,7 @@ const EditProfile = () => {
     lastName: '',
     email: '',
     country: 'United States',
-    streetAddress: '',
-    city: '',
-    region: '',
-    postalCode: '',
-    photo: null, // for the profile photo
-    coverPhoto: null, // for the cover photo
+    photo: null, 
   });
 
 
@@ -39,9 +34,9 @@ const EditProfile = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
 
 
     navigate('/my-profile');
@@ -60,7 +55,7 @@ const EditProfile = () => {
                 <label htmlFor="username" className="block text-sm font-medium text-gray-900">Username</label>
                 <div className="mt-2">
                   <div className="flex items-center rounded-md bg-white pl-3 outline-1 outline-gray-300 focus-within:outline-2 focus-within:outline-indigo-600">
-                    <div className="shrink-0 text-base text-gray-500 select-none sm:text-sm">workcation.com/</div>
+                    <div className="shrink-0 text-base text-gray-500 select-none sm:text-sm"></div>
                     <input
                       type="text"
                       name="username"
@@ -183,24 +178,9 @@ const EditProfile = () => {
               {formData.photo && <span>{formData.photo.name}</span>}
             </div>
           </div>
+       </div>
 
-          {/* Cover Photo */}
-          <div className="col-span-full">
-            <label htmlFor="coverPhoto" className="block text-sm font-medium text-gray-900">Cover Photo</label>
-            <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-              <div className="text-center">
-                <input
-                  type="file"
-                  id="coverPhoto"
-                  name="coverPhoto"
-                  accept="image/*"
-                  onChange={(e) => handleFileChange(e, 'coverPhoto')}
-                />
-                {formData.coverPhoto && <span>{formData.coverPhoto.name}</span>}
-              </div>
-            </div>
-          </div>
-        </div>
+
 
         <div className="mt-10 flex items-center justify-end gap-x-6">
           <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white">Save</button>
