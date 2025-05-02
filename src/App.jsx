@@ -8,8 +8,9 @@ import ProjectDetails from './pages/ProjectDetails';
 import CodeCrewLayout from './layouts/CodeCrewLayout';
 import ForgotPassword from './pages/ForgotPassword';
 import EditProfile from './pages/EditProfile';
-import { UserProvider } from './components/UserContext';
+import {UserProvider} from './components/UserContext';
 import Profile from './pages/Profile';
+import SubmitProject from './pages/SubmitProject.jsx';
 
 
 
@@ -18,21 +19,22 @@ const App = () => {
 
 
   return (
-    <UserProvider>
-      <CodeCrewLayout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/projects" element={<BrowseProjects />} />
-          <Route path="/projects/:id" element={<ProjectDetails />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/edit-profile" element={<EditProfile />} />
-          <Route path="/browse-projects" element={<BrowseProjects />} />
-          <Route path="/my-profile" element={<Profile />} />
-        </Routes>
-      </CodeCrewLayout>
-    </UserProvider>
+      <UserProvider>
+        <CodeCrewLayout>
+          <Routes>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/signin" element={<SignIn/>}/>
+            <Route path="/register" element={<Register/>}/>
+            <Route path="/projects" element={<BrowseProjects/>}/>
+            <Route path="/projects/new" element={<SubmitProject/>}/>
+            <Route path="/projects/:id" element={<ProjectDetails/>}/>
+            <Route path="/forgot-password" element={<ForgotPassword/>}/>
+            <Route path="/edit-profile" element={<EditProfile/>}/>
+            <Route path="/browse-projects" element={<BrowseProjects/>}/>
+            <Route path="/my-profile" element={<Profile/>}/>
+          </Routes>
+        </CodeCrewLayout>
+      </UserProvider>
   );
 };
 
