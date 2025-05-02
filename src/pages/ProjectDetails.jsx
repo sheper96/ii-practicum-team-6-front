@@ -63,16 +63,6 @@ const ProjectDetails = () => {
               <h2 className="text-xl font-semibold text-gray-800 mb-2">Description</h2>
               <p className="text-gray-600">{project.description}</p>
             </div>
-            <div className="flex flex-wrap gap-2 mb-6">
-              {project.reqSkills.map((tag, index) => (
-                  <span
-                      key={index}
-                      className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm"
-                  >
-                {tag}
-              </span>
-              ))}
-            </div>
             <div className="md:col-span-2">
               <h2 className="text-xl font-semibold text-gray-800 mb-2">Required Skills</h2>
               <div className="flex flex-wrap gap-2">
@@ -92,13 +82,6 @@ const ProjectDetails = () => {
                 <div className="space-y-2 text-gray-600">
                   <p>Team Size: {project.reqSpots}</p>
                   <p>Spots Available: {project.reqSpots - project.teamMembers.length}</p>
-                </div>
-              </div>
-
-              <div>
-                <h2 className="text-xl font-semibold text-gray-800 mb-2">Project Details</h2>
-                <div className="space-y-2 text-gray-600">
-
                 </div>
               </div>
 
