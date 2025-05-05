@@ -1,5 +1,2 @@
-const API_AUTH_URL = 'http://localhost:3000/api/auth/';
-
-
-
-export default API_AUTH_URL;
+const API_URL = 'http://localhost:3000/api/';
+export default API_URL;
