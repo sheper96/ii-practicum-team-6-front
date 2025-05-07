@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '../components/UserContext';
 import { useNavigate } from 'react-router-dom';
-import API_URL from '../config';
+import authAPI from '../config.js';
 
 const SignIn = () => {
   const { setUser } = useUser();
@@ -18,19 +18,11 @@ const SignIn = () => {
     const password = e.target.password.value;
 
     try {
-      const response = await fetch(`${API_URL}auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-
-      });
+      const response = await authAPI.login(JSON.stringify({email, password}));
       console.log('Response:', response);
 
-      
-      const body = await response.json();
+
+      const body = response.data;
       console.log('Body:', body);
 
 

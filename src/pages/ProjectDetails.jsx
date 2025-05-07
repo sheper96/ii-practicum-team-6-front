@@ -1,7 +1,6 @@
 import {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import axios from 'axios';
-import API_URL from '../config';
+import authAPI from '../config.js';
 
 const useProject = (projectId) => {
   const [project, setProject] = useState(null);
@@ -14,12 +13,7 @@ const useProject = (projectId) => {
 
       setIsLoading(true);
       try {
-        const {data} = await axios.get(`${API_URL}projects/${projectId}`, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          }
-        });
+        const {data} = await authAPI.getProject(projectId);
         console.log(data.data.project);
         setProject(data?.data?.project || null);
       } catch (err) {

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../components/UserContext';
-import API_URL from '../config';
+import authAPI from '../config.js';
 
 const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,20 +12,12 @@ const UserDropdown = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch(`${API_URL}auth/logout`, {
-        method: 'POST',
-        credentials: 'include',
+      const response = await authAPI.logOut();
 
-        headers: {
-          'Content-Type': 'application/json',
-
-        },
-      });
-
-      const data = await response.json();
+      const data = response.data;
 
       if (!response.ok) {
-        const data = await response.json();
+        const data = response.data;
         console.warn('Logout warning:', data.message);
       }
 
