@@ -20,6 +20,7 @@ const SignIn = () => {
     try {
       const response = await fetch(`${API_AUTH_URL}login`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
@@ -29,7 +30,7 @@ const SignIn = () => {
       });
       console.log('Response:', response);
 
-      
+
       const body = await response.json();
       console.log('Body:', body);
 
