@@ -29,7 +29,7 @@ const authAPI = {
     return instance.post('/auth/logout', data);
   },
   getProject(id) {
-    return instance.get(`/projects/${id}`);
+    return instance.get('/projects/${id}');
   },
 };
 
