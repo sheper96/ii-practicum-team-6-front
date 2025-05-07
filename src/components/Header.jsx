@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../image/Code.png';
-import { useUser } from '../components/UserContext';
+import { useUser } from '../context/UserContext';
 import UserDropdown from './UserDropdown';
 
 
@@ -26,14 +26,14 @@ const Header = () => {
       <nav className="flex items-center gap-4">
         {!user ? (
           <>
- <Link to="/signin" className="px-4 py-2 border rounded-md text-gray-700 hover:bg-gray-100">
-          Sign in
-        </Link>
-        <Link to="/register" className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800">
-          Register
-        </Link>
-        </>
-        ):(
+            <Link to="/signin" className="px-4 py-2 border rounded-md text-gray-700 hover:bg-gray-100">
+              Sign in
+            </Link>
+            <Link to="/register" className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800">
+              Register
+            </Link>
+          </>
+        ) : (
           <UserDropdown />
         )}
       </nav>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useUser } from '../components/UserContext';
+import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -118,5 +118,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-

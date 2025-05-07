@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useUser } from '../components/UserContext';
+import { useUser } from '../context/UserContext';
 import API_AUTH_URL from '../config';
 
 const UserDropdown = () => {
@@ -39,7 +39,7 @@ const UserDropdown = () => {
     } catch (err) {
       console.error('Logout Error:', err.message);
       setUser(null);
-    
+
       navigate('/');
       //window.location.href = '/';
     }
