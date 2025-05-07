@@ -9,6 +9,10 @@ const UserDropdown = () => {
   const { setUser } = useUser();
   const navigate = useNavigate();
 
+  // TODO: handle logout
+  // logout request
+  // update UI correctly
+  // clear local storage
 
   const handleLogout = async () => {
     try {
