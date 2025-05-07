@@ -45,15 +45,15 @@ const SignIn = () => {
       const user = data.user;
       console.log('user:', user);
 
-      setUser(user);
-      if (body.data?.user) {
-        setUser(body.data.user);
+
+      // we can use user from above here
+      if (user) {
+        setUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
         navigate('/');
       } else {
         throw new Error(bosy.message || 'Login Failed');
       }
-
-
     } catch (err) {
       console.error('Login error:', err.message);
       setError(err.message);

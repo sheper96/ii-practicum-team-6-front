@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Profile = () => {
-  const { user } = useUser();
+  // const { user } = useUser();
+  const user = JSON.parse(localStorage.getItem('user'));
+
 
   if (!user) return null;
 

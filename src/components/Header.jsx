@@ -8,8 +8,7 @@ import UserDropdown from './UserDropdown';
 
 
 const Header = () => {
-  const { user } = useUser();
-
+  const user = JSON.parse(localStorage.getItem('user'));
 
   return (
     <header className="w-full px-6 py-4 flex justify-between items-center border-b border-gray-300 bg-white">
