@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import ProjectCard from './ProjectCard';
-import authAPI from '../config.js';
+import codeCrewAPI from '../config.js';
 
 const useFeaturedProjects = () => {
   const [projects, setProjects] = useState([]);
@@ -12,7 +12,7 @@ const useFeaturedProjects = () => {
     const fetchProjects = async () => {
       setIsLoading(true);
       try {
-        const response = await authAPI.getProjects({
+          const response = await codeCrewAPI.getProjects({
           params: {
             limit: 4,
             page: 1,
