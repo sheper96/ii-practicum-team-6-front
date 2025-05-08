@@ -1,10 +1,12 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import API_AUTH_URL from '../config';
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
 
+  // get user from local storage
   const [user, setUser] = useState(() => {
     try {
       const userFromLocalStorage = JSON.parse(localStorage.getItem('user'));
@@ -20,22 +22,33 @@ export const UserProvider = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const checkSession = async () => {
       try {
         const response = await fetch(`${API_AUTH_URL}me`, {
           credentials: 'include',
         });
 
-        if (!response.ok) throw new Error('No active session');
-
-        const data = await response.json();
-        setUser(data);
+        if (response.ok) {
+          console.log('Active session');
+          const body = await response.json();
+          // console.log('body:', body);
+          const user = body.data.user;
+          // console.log('User data:', user);
+          setUser(user);
+          localStorage.setItem('user', JSON.stringify(user));
+        } else {
+          console.log('No active session');
+          setUser(null);
+          localStorage.removeItem('user');
+          navigate('/signin');
+        }
       } catch (err) {
         setUser(null);
+        localStorage.removeItem('user');
       }
     };
 
-    fetchUser();
+    checkSession();
   }, []);
 
   return (
