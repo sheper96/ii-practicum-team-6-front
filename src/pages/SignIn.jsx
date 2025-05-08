@@ -45,6 +45,7 @@ const SignIn = () => {
       const user = data.user;
       console.log('user:', user);
 
+      
 
       // we can use user from above here
       if (user) {

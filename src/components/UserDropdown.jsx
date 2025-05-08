@@ -19,10 +19,8 @@ const UserDropdown = () => {
       const response = await fetch(`${API_AUTH_URL}logout`, {
         method: 'POST',
         credentials: 'include',
-
         headers: {
           'Content-Type': 'application/json',
-
         },
       });
 
@@ -35,17 +33,18 @@ const UserDropdown = () => {
 
 
       setUser(null);
+      localStorage.removeItem('user');
+      //close dropdown and navigate
+      setIsOpen(false);
 
       navigate('/');
-      //window.location.href = '/';
-
 
     } catch (err) {
       console.error('Logout Error:', err.message);
       setUser(null);
-
+      localStorage.removeItem('user');
       navigate('/');
-      //window.location.href = '/';
+
     }
   };
 

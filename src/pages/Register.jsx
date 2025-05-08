@@ -33,8 +33,11 @@ const Register = () => {
       setError("Password must be at least 8 characters long");
       return;
     }
+    if (password.length > 15) {
+      setError("Password must be less than or equal to 15 characters long");
+      return;
+    }
 
-    // handle password less than 15 characters
 
     try {
       const response = await fetch(`${API_AUTH_URL}register`, {

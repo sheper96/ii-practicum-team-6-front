@@ -10,13 +10,13 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch(`${API_AUTH_URL}me`, {
+        const response = await fetch(`${API_AUTH_URL}me`, {
           credentials: 'include',
         });
 
-        if (!res.ok) throw new Error('No active session');
+        if (!response.ok) throw new Error('No active session');
 
-        const data = await res.json();
+        const data = await response.json();
         setUser(data);
       } catch (err) {
         setUser(null);

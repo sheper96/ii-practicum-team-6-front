@@ -4,11 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Profile = () => {
-  // const { user } = useUser();
+  //const { user } = useUser();
   const user = JSON.parse(localStorage.getItem('user'));
 
-
-  if (!user) return null;
+if (!user) return null;
 
   const {
     username,
@@ -24,26 +23,43 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const handleEditProfile = () => {
-    navigate('/edit-profile'); // assuming your Register.jsx is rendered at this route
+    navigate('/edit-profile');
   };
 
 
   return (
-    <div className="bg-gradient-to-r from-indigo-800 to-blue-900 min-h-screen flex items-center justify-center p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full p-8 transition-all duration-300 animate-fade-in">
-        <div className="flex flex-col md:flex-row w-full">
+    
 
-          <div className="md:w-1/3 text-center mb-8 md:mb-0">
-            <img
-              src={photo || "https://i.pravatar.cc/300"}
-              alt="Profile"
-              className="rounded-full w-48 h-48 mx-auto mb-4 border-4 border-indigo-800 dark:border-blue-900 transition-transform duration-300 hover:scale-105"
-            />
-            <h1 className="text-2xl font-bold text-indigo-800 dark:text-white mb-2">{firstName} {lastName}</h1>
-            <p className="text-gray-600 dark:text-gray-300">@{username}</p>
+    <div className="bg-gradient-to-r from-indigo-800 to-blue-900 min-h-screen flex items-center justify-center p-4">
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full p-8 transition-all duration-300 animate-fade-in">
+      <div className="flex flex-col md:flex-row w-full">
+
+        <div className="md:w-1/3 text-center mb-8 md:mb-0">
+          {/* Generic Avatar Icon */}
+          <div className="mx-auto mb-4 flex items-center justify-center w-48 h-48 rounded-full bg-indigo-100 dark:bg-gray-700 border-4 border-indigo-800 dark:border-blue-900">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-32 w-32 text-indigo-800 dark:text-blue-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              />
+            </svg>
+          </div>
+          <h1 className="text-2xl font-bold text-indigo-800 dark:text-white mb-2">
+              {firstName} {lastName}
+            </h1>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">@{username}</p>
             <button
               onClick={handleEditProfile}
-              className="mt-4 bg-indigo-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition-colors duration-300">
+              className="mt-4 bg-indigo-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition-colors duration-300"
+            >
               Edit Profile
             </button>
           </div>
