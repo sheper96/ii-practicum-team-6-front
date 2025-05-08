@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '../components/UserContext';
 import { useNavigate } from 'react-router-dom';
-import authAPI from '../config.js';
+import codeCrewAPI from '../config.js';
 
 const SignIn = () => {
   const { setUser } = useUser();
@@ -18,7 +18,7 @@ const SignIn = () => {
     const password = e.target.password.value;
 
     try {
-      const response = await authAPI.login(JSON.stringify({email, password}));
+      const response = await codeCrewAPI.login(JSON.stringify({email, password}));
       console.log('Response:', response);
 
 

@@ -9,7 +9,7 @@ export const instance = axios.create({
   }
 });
 
-const authAPI = {
+const codeCrewAPI = {
   register(data) {
     return instance.post('/auth/register', data);
   },
@@ -23,17 +23,14 @@ const authAPI = {
     return instance.post('/auth/logout');
   },
   forgotPassword(data) {
-    return instance.post('/auth/logout', data);
+    return instance.post('/auth/forgot-password', data);
   },
   resetPassword(data) {
-    return instance.post('/auth/logout', data);
+    return instance.post('/auth/reset-password', data);
   },
   getProject(id) {
     return instance.get(`/projects/${id}`);
   },
-  getProjects(data = {}) {
-    return instance.get('/projects', data);
-  },
 };
 
-export default authAPI;
+export default codeCrewAPI;
