@@ -5,24 +5,8 @@ import { useUser } from '../context/UserContext';
 import UserDropdown from './UserDropdown';
 
 
-
-
-// const Header = () => {
-//   const user = JSON.parse(localStorage.getItem('user'));
-
 const Header = () => {
-  let user = null;
-
-  try {
-    const raw = localStorage.getItem('user');
-    user = raw ? JSON.parse(raw) : null;
-  } catch (err) {
-    console.error('Failed to parse user from localStorage:', err);
-    localStorage.removeItem('user'); // optional: clean up the bad value
-    user = null;
-  }
-
-
+  const { user } = useUser();
   return (
     <header className="w-full px-6 py-4 flex justify-between items-center border-b border-gray-300 bg-white">
 

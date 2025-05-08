@@ -4,7 +4,19 @@ import { useNavigate } from "react-router-dom";
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+
+  const [user, setUser] = useState(() => {
+    try {
+      const userFromLocalStorage = JSON.parse(localStorage.getItem('user'));
+      return userFromLocalStorage || null;
+    } catch (err) {
+      console.error('Failed to parse user from localStorage:', err);
+      localStorage.removeItem('user');
+      return null;
+    }
+
+  });
+
   const navigate = useNavigate();
 
   useEffect(() => {
