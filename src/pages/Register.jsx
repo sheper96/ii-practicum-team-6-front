@@ -60,7 +60,7 @@ const Register = () => {
 
       console.log('Body:', body);
 
-      if (!response.ok) {
+      if (!body.success) {
         throw new Error(body.message || "Something went wrong");
 
       }

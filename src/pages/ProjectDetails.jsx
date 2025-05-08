@@ -1,9 +1,8 @@
 import {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import axios from 'axios';
+import codeCrewAPI from '../config.js';
 
 const useProject = (projectId) => {
-  const API_URL = 'http://localhost:3000/api';
   const [project, setProject] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,12 +13,7 @@ const useProject = (projectId) => {
 
       setIsLoading(true);
       try {
-        const {data} = await axios.get(`${API_URL}/projects/${projectId}`, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          }
-        });
+        const {data} = await codeCrewAPI.getProject(projectId);
         console.log(data.data.project);
         setProject(data?.data?.project || null);
       } catch (err) {

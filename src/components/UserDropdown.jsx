@@ -22,7 +22,7 @@ const UserDropdown = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        const data = await response.json();
+        const data = response.data;
         console.warn('Logout warning:', data.message);
       }
 
