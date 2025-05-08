@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../components/UserContext';
-import authAPI from '../config.js';
+import codeCrewAPI from '../config.js';
 
 const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +12,7 @@ const UserDropdown = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await authAPI.logOut();
+      const response = await codeCrewAPI.logOut();
 
       const data = response.data;
 

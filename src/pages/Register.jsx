@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../components/UserContext';
-import authAPI from '../config.js';
+import codeCrewAPI from '../config.js';
 
 const Register = () => {
 
@@ -34,7 +34,7 @@ const Register = () => {
       return;
     }
     try {
-      const response = await authAPI.register(
+      const response = await codeCrewAPI.register(
           JSON.stringify({
             username,
             email,

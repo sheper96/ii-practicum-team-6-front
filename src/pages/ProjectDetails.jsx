@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import authAPI from '../config.js';
+import codeCrewAPI from '../config.js';
 
 const useProject = (projectId) => {
   const [project, setProject] = useState(null);
@@ -13,7 +13,7 @@ const useProject = (projectId) => {
 
       setIsLoading(true);
       try {
-        const {data} = await authAPI.getProject(projectId);
+        const {data} = await codeCrewAPI.getProject(projectId);
         console.log(data.data.project);
         setProject(data?.data?.project || null);
       } catch (err) {
