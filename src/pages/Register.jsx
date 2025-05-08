@@ -13,6 +13,7 @@ const Register = () => {
 
 
   const navigate = useNavigate();
+
   const { setUser } = useUser();
 
   const handleSubmit = async (e) => {
@@ -38,10 +39,10 @@ const Register = () => {
       return;
     }
 
-
     try {
       const response = await fetch(`${API_AUTH_URL}register`, {
-        method: "POST",
+        method: 'POST',
+        // credentials: 'include', // ISSUE - response doesn't include token in cookie
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
@@ -54,8 +55,6 @@ const Register = () => {
         }),
       });
 
-
-
       const body = await response.json();
       console.log('Response:', response);
 
@@ -66,10 +65,9 @@ const Register = () => {
 
       }
 
-      localStorage.setItem('user', JSON.stringify(body.user));
-      setUser(body.user);
-      navigate('/edit-profile');
-
+      localStorage.setItem('user', JSON.stringify(body.data.user));
+      setUser(body.data.user);
+      navigate('/');
     } catch (err) {
       setError(err.message);
     }
