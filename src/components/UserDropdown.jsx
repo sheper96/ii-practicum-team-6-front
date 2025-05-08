@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useUser } from '../components/UserContext';
-import codeCrewAPI from '../config.js';
+import { useUser } from '../context/UserContext';
+// import API_AUTH_URL from '../config';
 
 const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,12 +9,17 @@ const UserDropdown = () => {
   const { setUser } = useUser();
   const navigate = useNavigate();
 
-
   const handleLogout = async () => {
     try {
-      const response = await codeCrewAPI.logOut();
+      const response = await fetch(`http://localhost:3000/api/auth/logout`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-      const data = response.data;
+      const data = await response.json();
 
       if (!response.ok) {
         const data = response.data;
@@ -23,17 +28,18 @@ const UserDropdown = () => {
 
 
       setUser(null);
+      localStorage.removeItem('user');
+      //close dropdown and navigate
+      setIsOpen(false);
 
       navigate('/');
-      //window.location.href = '/';
-
 
     } catch (err) {
       console.error('Logout Error:', err.message);
       setUser(null);
-    
+      localStorage.removeItem('user');
       navigate('/');
-      //window.location.href = '/';
+
     }
   };
 

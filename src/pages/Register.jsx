@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useUser } from '../components/UserContext';
-import codeCrewAPI from '../config.js';
+import { useUser } from '../context/UserContext';
+// import API_AUTH_URL from '../config';
 
 const Register = () => {
 
@@ -13,6 +13,7 @@ const Register = () => {
 
 
   const navigate = useNavigate();
+
   const { setUser } = useUser();
 
   const handleSubmit = async (e) => {
@@ -33,18 +34,28 @@ const Register = () => {
       setError("Password must be at least 8 characters long");
       return;
     }
+    if (password.length > 15) {
+      setError("Password must be less than or equal to 15 characters long");
+      return;
+    }
+
     try {
-      const response = await codeCrewAPI.register(
-          JSON.stringify({
-            username,
-            email,
-            password,
-            confirmPassword
-          })
-      );
+      const response = await fetch(`http://localhost:3000/api/auth/register`, {
+        method: 'POST',
+        // credentials: 'include', // ISSUE - response doesn't include token in cookie
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          confirmPassword
+        }),
+      });
 
-
-      const body = response.data;
+      const body = await response.json();
       console.log('Response:', response);
 
       console.log('Body:', body);
@@ -54,10 +65,9 @@ const Register = () => {
 
       }
 
-      localStorage.setItem('user', JSON.stringify(body.user));
-      setUser(body.user);
-      navigate('/edit-profile');
-
+      localStorage.setItem('user', JSON.stringify(body.data.user));
+      setUser(body.data.user);
+      navigate('/');
     } catch (err) {
       setError(err.message);
     }

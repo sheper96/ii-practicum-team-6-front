@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useUser } from '../components/UserContext';
+import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
-import codeCrewAPI from '../config.js';
+
+// import API_AUTH_URL from '../config';
 
 const SignIn = () => {
   const { setUser } = useUser();
@@ -18,11 +19,20 @@ const SignIn = () => {
     const password = e.target.password.value;
 
     try {
-      const response = await codeCrewAPI.login(JSON.stringify({email, password}));
+      const response = await fetch(`http://localhost:3000/api/auth/login`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+
+      });
       console.log('Response:', response);
 
 
-      const body = response.data;
+      const body = await response.json();
       console.log('Body:', body);
 
 
@@ -36,15 +46,16 @@ const SignIn = () => {
       const user = data.user;
       console.log('user:', user);
 
-      setUser(user);
-      if (body.data?.user) {
-        setUser(body.data.user);
+
+
+      // we can use user from above here
+      if (user) {
+        setUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
         navigate('/');
       } else {
         throw new Error(bosy.message || 'Login Failed');
       }
-
-
     } catch (err) {
       console.error('Login error:', err.message);
       setError(err.message);
