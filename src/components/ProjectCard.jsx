@@ -33,14 +33,14 @@ const ProjectCard = ({project, onLike, onClick}) => {
         <p className="text-gray-600 mb-4 text-sm line-clamp-2">{description}</p>
 
         <div className="flex flex-wrap gap-2 mb-4">
-          {tags.map((tag, index) => (
+            {tags.map(tag => (
               <span
-                  key={index}
+                  key={tag._id}
                   className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs"
                   onClick={(e) => e.stopPropagation()}>
-                        {tag}
-                    </span>
-          ))}
+                  {tag.name}
+              </span>
+            ))}
         </div>
 
         <div className="flex justify-between items-center">
