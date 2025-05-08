@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../components/UserContext';
-import API_AUTH_URL from '../config';
+import codeCrewAPI from '../config.js';
 
 const Register = () => {
 
@@ -34,28 +34,22 @@ const Register = () => {
       return;
     }
     try {
-      const response = await fetch(`${API_AUTH_URL}register`, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-          confirmPassword
-        }),
-      });
+      const response = await codeCrewAPI.register(
+          JSON.stringify({
+            username,
+            email,
+            password,
+            confirmPassword
+          })
+      );
 
 
-
-      const body = await response.json();
+      const body = response.data;
       console.log('Response:', response);
 
       console.log('Body:', body);
 
-      if (!response.ok) {
+      if (!body.success) {
         throw new Error(body.message || "Something went wrong");
 
       }
