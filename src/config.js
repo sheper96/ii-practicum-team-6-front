@@ -31,7 +31,7 @@ const codeCrewAPI = {
   getProject(id) {
     return instance.get(`/projects/${id}`);
   },
-  getProjects(data) {
+  getProjects(data = {}) {
     return instance.get('/projects', data);
   }
 
