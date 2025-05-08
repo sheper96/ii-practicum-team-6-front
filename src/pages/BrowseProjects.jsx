@@ -12,8 +12,8 @@ const BrowseProjects = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [sortBy, setSortBy] = useState(DEFAULT_SORT);
   const {projects, setProjects, isLoading, error} = useProjects({
-    limit: 10,
-    page: 2,
+    limit: 8,
+    page: 1,
 
   });
 
@@ -178,13 +178,10 @@ const BrowseProjects = () => {
         </div>
 
         <div className="flex justify-center">
-          <div className="max-w-full overflow-x-auto pb-6 scrollbar-hide">
-            <div className="flex space-x-6 px-4 justify-center">
-              {filteredAndSortedProjects.map((project, index) => (
-                  <div
-                      key={project._id}
-                      className={`${index > 0 ? 'hidden' : ''} sm:block ${index > 1 ? 'sm:hidden' : ''} md:block`}
-                  >
+          <div className="max-w-7xl overflow-x-auto pb-6 scrollbar-hide">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-4">
+              {filteredAndSortedProjects.map((project) => (
+                  <div key={project._id}>
                     <ProjectCard
                         project={project}
                         onLike={handleLike}
