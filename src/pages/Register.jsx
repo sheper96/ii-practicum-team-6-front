@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
-import API_AUTH_URL from '../config';
+// import API_AUTH_URL from '../config';
 
 const Register = () => {
 
@@ -40,7 +40,7 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch(`${API_AUTH_URL}register`, {
+      const response = await fetch(`http://localhost:3000/api/auth/register`, {
         method: 'POST',
         // credentials: 'include', // ISSUE - response doesn't include token in cookie
         headers: {

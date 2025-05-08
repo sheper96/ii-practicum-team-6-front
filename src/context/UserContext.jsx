@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import API_AUTH_URL from '../config';
+// import API_AUTH_URL from '../config';
 
 const UserContext = createContext();
 
@@ -24,7 +24,7 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const response = await fetch(`${API_AUTH_URL}me`, {
+        const response = await fetch(`http://localhost:3000/api/auth/me`, {
           credentials: 'include',
         });
 

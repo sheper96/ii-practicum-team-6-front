@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
-import API_AUTH_URL from '../config';
+// import API_AUTH_URL from '../config';
 
 const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +11,7 @@ const UserDropdown = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch(`${API_AUTH_URL}logout`, {
+      const response = await fetch(`http://localhost:3000/api/auth/logout`, {
         method: 'POST',
         credentials: 'include',
         headers: {
