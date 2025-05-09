@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useUser } from '../components/UserContext';
-import codeCrewAPI from '../config.js';
+import { useUser } from '../context/UserContext';
+import codeCrewAPI from '../config';
+import { HiEye, HiEyeOff } from 'react-icons/hi';
+
 
 const Register = () => {
 
@@ -10,9 +12,10 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
+
   const { setUser } = useUser();
 
   const handleSubmit = async (e) => {
@@ -33,33 +36,31 @@ const Register = () => {
       setError("Password must be at least 8 characters long");
       return;
     }
+    if (password.length > 15) {
+      setError("Password must be less than or equal to 15 characters long");
+      return;
+    }
+
     try {
-      const response = await codeCrewAPI.register(
-          JSON.stringify({
-            username,
-            email,
-            password,
-            confirmPassword
-          })
-      );
+      const response = await codeCrewAPI.register({
+        username,
+        email,
+        password,
+        confirmPassword,
+      });
+
+      const { data } = response;
+      const user = data.data.user;
 
 
-      const body = response.data;
-      console.log('Response:', response);
+      setUser(user);
+      localStorage.setItem('user', JSON.stringify(user));
 
-      console.log('Body:', body);
-
-      if (!body.success) {
-        throw new Error(body.message || "Something went wrong");
-
-      }
-
-      localStorage.setItem('user', JSON.stringify(body.user));
-      setUser(body.user);
-      navigate('/edit-profile');
-
+      navigate('/');
     } catch (err) {
-      setError(err.message);
+      //setError(err.message);
+      console.log(err.response?.data); // Log full error
+      setError(err.response?.data?.message || "Registration failed");
     }
   };
 
@@ -69,7 +70,7 @@ const Register = () => {
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-b  px-4">
       <div className="w-full max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8">
         <form className="space-y-6" onSubmit={handleSubmit}>
-          <h5 className="text-xl font-medium text-gray-900">Create an account</h5>
+          <h5 className="text-2xl font-medium text-gray-900 text-center">Create an account</h5>
 
 
           <div>
@@ -99,18 +100,18 @@ const Register = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="name@company.com"
+              placeholder=""
               required
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             />
           </div>
 
-          <div>
+          <div className="relative">
             <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">
               Password
             </label>
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               name="password"
               id="password"
               value={password}
@@ -119,14 +120,23 @@ const Register = () => {
               required
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             />
+            <div
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-3 cursor-pointer"
+              style={{ top: '50%' }}
+            >
+              {showPassword ? <HiEyeOff className="text-gray-500" /> : <HiEye className="text-gray-500" />}
+            </div>
           </div>
 
-          <div>
+
+
+          <div className="relative">
             <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-gray-900">
               Confirm Password
             </label>
             <input
-              type="password"
+              type={showConfirmPassword ? 'text' : 'password'}
               name="confirmPassword"
               id="confirmPassword"
               value={confirmPassword}
@@ -135,6 +145,14 @@ const Register = () => {
               required
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             />
+
+            <div
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute top-3 right-3 cursor-pointer"
+              style={{ top: '50%' }}
+            >
+              {showConfirmPassword ? <HiEyeOff className="text-gray-500" /> : <HiEye className="text-gray-500" />}
+            </div>
           </div>
 
           {error && (

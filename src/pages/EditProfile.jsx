@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import codeCrewAPI from '../config';
 
 const EditProfile = () => {
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const [formData, setFormData] = useState({
-    username: '',
-    about: '',
-    skills: '',
-    firstName: '',
-    lastName: '',
-    email: '',
+    username: user.username || '',
+    about: user.bio || '',
+    skills: '', // TODO: add skills to user object
+    email: user.email || '',
     country: 'United States',
-    photo: null, 
+    photo: '',
   });
 
 
-
+  // first and last name fields can be removed
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,7 +37,9 @@ const EditProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
+    // request to update user profile on the server
+    // if successful, update local storage and navigate to profile page
+    // failure, show error message
 
     navigate('/my-profile');
   };
@@ -69,7 +71,7 @@ const EditProfile = () => {
                 </div>
               </div>
 
-              {/* First and Last Name Fields */}
+              {/* First and Last Name Fields
               <div className="sm:col-span-3">
                 <label htmlFor="firstName" className="block text-sm font-medium text-gray-900">First name</label>
                 <div className="mt-2">
@@ -82,9 +84,9 @@ const EditProfile = () => {
                     onChange={handleChange}
                   />
                 </div>
-              </div>
+              </div> */}
 
-              <div className="sm:col-span-3">
+              {/* <div className="sm:col-span-3">
                 <label htmlFor="lastName" className="block text-sm font-medium text-gray-900">Last name</label>
                 <div className="mt-2">
                   <input
@@ -96,7 +98,7 @@ const EditProfile = () => {
                     onChange={handleChange}
                   />
                 </div>
-              </div>
+              </div> */}
 
               {/* Email and Country Fields */}
               <div className="sm:col-span-4">
@@ -143,9 +145,10 @@ const EditProfile = () => {
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
                 value={formData.about}
                 onChange={handleChange}
+                placeholder='Write a few sentences about yourself' // make it more engaging
               />
             </div>
-            <p className="mt-3 text-sm text-gray-600">Write a few sentences about yourself.</p>
+
           </div>
 
           {/* Skills Section */}
@@ -159,9 +162,10 @@ const EditProfile = () => {
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
                 value={formData.skills}
                 onChange={handleChange}
+                placeholder='Impress your teammates with your skills'
               />
             </div>
-            <p className="mt-3 text-sm text-gray-600">Impress your teammates with your skills.</p>
+
           </div>
 
           {/* Profile Photo */}
@@ -178,7 +182,7 @@ const EditProfile = () => {
               {formData.photo && <span>{formData.photo.name}</span>}
             </div>
           </div>
-       </div>
+        </div>
 
 
 

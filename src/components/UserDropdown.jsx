@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useUser } from '../components/UserContext';
-import codeCrewAPI from '../config.js';
+import { useUser } from '../context/UserContext';
+import codeCrewAPI from '../config';
 
 const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,31 +9,25 @@ const UserDropdown = () => {
   const { setUser } = useUser();
   const navigate = useNavigate();
 
-
+  
   const handleLogout = async () => {
     try {
-      const response = await codeCrewAPI.logOut();
-
-      const data = response.data;
-
-      if (!response.ok) {
-        const data = response.data;
-        console.warn('Logout warning:', data.message);
-      }
+      await codeCrewAPI.logOut();
 
 
       setUser(null);
+      localStorage.removeItem('user');
+      //close dropdown and navigate
+      setIsOpen(false);
 
       navigate('/');
-      //window.location.href = '/';
-
 
     } catch (err) {
       console.error('Logout Error:', err.message);
       setUser(null);
-    
+      localStorage.removeItem('user');
       navigate('/');
-      //window.location.href = '/';
+
     }
   };
 
