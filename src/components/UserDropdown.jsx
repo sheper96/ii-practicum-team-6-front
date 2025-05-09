@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
-// import API_AUTH_URL from '../config';
+import codeCrewAPI from '../config';
 
 const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,22 +9,10 @@ const UserDropdown = () => {
   const { setUser } = useUser();
   const navigate = useNavigate();
 
+  
   const handleLogout = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/auth/logout`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        const data = response.data;
-        console.warn('Logout warning:', data.message);
-      }
+      await codeCrewAPI.logOut();
 
 
       setUser(null);

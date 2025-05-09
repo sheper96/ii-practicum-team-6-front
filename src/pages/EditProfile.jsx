@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import codeCrewAPI from '../config';
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -9,8 +10,6 @@ const EditProfile = () => {
     username: user.username || '',
     about: user.bio || '',
     skills: '', // TODO: add skills to user object
-    firstName: user.firstName || '',
-    lastName: user.lastName || '',
     email: user.email || '',
     country: 'United States',
     photo: '',
@@ -72,7 +71,7 @@ const EditProfile = () => {
                 </div>
               </div>
 
-              {/* First and Last Name Fields */}
+              {/* First and Last Name Fields
               <div className="sm:col-span-3">
                 <label htmlFor="firstName" className="block text-sm font-medium text-gray-900">First name</label>
                 <div className="mt-2">
@@ -85,9 +84,9 @@ const EditProfile = () => {
                     onChange={handleChange}
                   />
                 </div>
-              </div>
+              </div> */}
 
-              <div className="sm:col-span-3">
+              {/* <div className="sm:col-span-3">
                 <label htmlFor="lastName" className="block text-sm font-medium text-gray-900">Last name</label>
                 <div className="mt-2">
                   <input
@@ -99,7 +98,7 @@ const EditProfile = () => {
                     onChange={handleChange}
                   />
                 </div>
-              </div>
+              </div> */}
 
               {/* Email and Country Fields */}
               <div className="sm:col-span-4">
@@ -149,7 +148,7 @@ const EditProfile = () => {
                 placeholder='Write a few sentences about yourself' // make it more engaging
               />
             </div>
-            {/* <p className="mt-3 text-sm text-gray-600">Write a few sentences about yourself.</p> */}
+
           </div>
 
           {/* Skills Section */}
@@ -163,9 +162,10 @@ const EditProfile = () => {
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
                 value={formData.skills}
                 onChange={handleChange}
+                placeholder='Impress your teammates with your skills'
               />
             </div>
-            <p className="mt-3 text-sm text-gray-600">Impress your teammates with your skills.</p>
+
           </div>
 
           {/* Profile Photo */}
