@@ -24,7 +24,7 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const response = await codeCrewAPI.get('/auth/me');
+        const response = await codeCrewAPI.authMe();
         const user = response.data.data.user;
 
         console.log('Active session', user);
