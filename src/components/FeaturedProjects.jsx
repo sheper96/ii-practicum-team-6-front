@@ -1,71 +1,89 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import ProjectCard from './ProjectCard';
+import codeCrewAPI from '../config.js';
+
+const useFeaturedProjects = () => {
+  const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      setIsLoading(true);
+      try {
+          const response = await codeCrewAPI.getProjects({
+          params: {
+            limit: 4,
+            page: 1,
+            sort: 'mostLiked'
+          }
+        });
+        const apiProjects = response.data?.data?.projects || [];
+        setProjects(Object.values(apiProjects));
+      } catch (err) {
+        console.error('Error fetching projects:', err);
+        setError(err.response?.data?.message || 'Failed to fetch projects');
+        setProjects([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
+
+  return {projects, setProjects, isLoading, error};
+};
+
 const FeaturedProjects = () => {
-    const [projects, setProjects] = useState([
-        {
-            id: 1,
-            title: "Code Crew",
-            description: "Build a project collaboration to help find partners for Code The Dream projects.",
-            likes: 24,
-            contributors: 2,
-            tags: ["CTD", "Web Dev", "React"],
-            teamSize: 5,
-            liked: false,
-        },
-        {
-            id: 2,
-            title: "Data Visualization Dashboard",
-            description: "Create an interactive dashboard to visualize complex datasets with customizable charts and filters.",
-            likes: 18,
-            contributors: 3,
-            tags: ["Data Science", "UI/UX", "D3.js"],
-            teamSize: 5,
-            liked: false,
-        },
-        {
-            id: 3,
-            title: "Smart Home Automation System",
-            description: "Develop a system to control and automate home devices using IoT sensors and machine learning algorithms.",
-            likes: 32,
-            contributors: 4,
-            tags: ["IoT", "ML", "Embedded"],
-            teamSize: 6,
-            liked: false,
-        },
-        {
-            id: 4,
-            title: "Blockchain Voting Platform",
-            description: "Build a secure and transparent voting platform using blockchain technology for verifiable elections.",
-            likes: 27,
-            contributors: 2,
-            tags: ["Blockchain", "Security", "Web3"],
-            teamSize: 4,
-            liked: false,
-        }
-    ]);
+  const {projects, setProjects, isLoading, error} = useFeaturedProjects();
 
     const handleLike = (id) => {
-        setProjects(projects.map(project =>
-            project.id === id ? { ...project, liked: !project.liked, likes: project.liked ? project.likes - 1 : project.likes + 1 } : project
-        ));
+      setProjects(projects.map(project =>
+          project._id === id ? {
+            ...project,
+            liked: !project.liked,
+            likes: project.liked ? project.likes - 1 : project.likes + 1
+          } : project
+      ));
     };
 
     const navigate = useNavigate();
-
     const handleCardClick = (id) => {
         navigate(`/projects/${id}`);
     };
 
-   return (
-      <section className="  py-8 px-4">
+  if (isLoading) {
+    return (
+        <section className="py-8 px-4">
+          <h2 className="text-2xl font-bold mb-6 text-center">Featured Projects</h2>
+          <div className="flex justify-center">
+            <div>Loading featured projects...</div>
+          </div>
+        </section>
+    );
+  }
+
+  if (error) {
+    return (
+        <section className="py-8 px-4">
+          <h2 className="text-2xl font-bold mb-6 text-center">Featured Projects</h2>
+          <div className="flex justify-center">
+            <div>Error: {error}</div>
+          </div>
+        </section>
+    );
+  }
+
+  return (
+      <section className="py-8 px-4">
         <h2 className="text-2xl font-bold mb-6 text-center">Featured Projects</h2>
         <div className="flex justify-center">
           <div className="max-w-full overflow-x-auto pb-6 scrollbar-hide">
             <div className="flex space-x-6 px-4 justify-center">
               {projects.map((project, index) => (
                 <div
-                  key={project.id}
+                    key={project._id}
                   className={`${index > 0 ? 'hidden' : ''} sm:block ${index > 1 ? 'sm:hidden' : ''} md:block`}
                 >
                   <ProjectCard
