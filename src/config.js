@@ -33,7 +33,10 @@ const codeCrewAPI = {
   },
   getProjects(data = {}) {
     return instance.get('/projects', data);
-  }
+  },
+  createProject(data) {
+    return instance.post('/projects', data);
+  },
 
 };
 
