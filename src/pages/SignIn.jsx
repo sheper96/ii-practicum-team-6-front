@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import codeCrewAPI from '../config';
 
-// import API_AUTH_URL from '../config';
 
 const SignIn = () => {
   const { setUser } = useUser();
@@ -19,42 +19,28 @@ const SignIn = () => {
     const password = e.target.password.value;
 
     try {
-      const response = await fetch(`http://localhost:3000/api/auth/login`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
+      const response = await codeCrewAPI.login({ email, password });
 
-      });
-      console.log('Response:', response);
-
-
-      const body = await response.json();
+      const body = response.data;
       console.log('Body:', body);
 
 
       if (!body.success) {
-        throw new Error(data.message || 'Login Failed');
+        throw new Error(body.message || 'Login Failed');
       };
 
 
       const data = body.data;
       console.log('data:', data);
-      const user = data.user;
+      const user = body.data.user;
       console.log('user:', user);
 
-
-
-      // we can use user from above here
       if (user) {
         setUser(user);
         localStorage.setItem('user', JSON.stringify(user));
         navigate('/');
       } else {
-        throw new Error(bosy.message || 'Login Failed');
+        throw new Error(body.message || 'Login Failed');
       }
     } catch (err) {
       console.error('Login error:', err.message);
@@ -63,17 +49,14 @@ const SignIn = () => {
   };
 
 
-
-
-
   return (
     <div className="flex justify-center items-center min-h-screen  px-4">
       <div className="w-full max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8">
         <form className="space-y-6" onSubmit={handleSubmit}>
-          <h5 className="text-xl font-medium text-gray-900">Sign in</h5>
+          <h5 className="text-2xl font-medium text-gray-900 text-center">Sign in</h5>
 
           <div>
-            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
+            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 ">
               Your email
             </label>
             <input
@@ -101,18 +84,8 @@ const SignIn = () => {
             />
           </div>
 
-          <div className="flex items-start justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember"
-                type="checkbox"
-                className="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300"
-              />
-              <label htmlFor="remember" className="ml-2 text-sm font-medium text-gray-900">
-                Remember me
-              </label>
 
-            </div>
+          <div className="flex justify-center">
             <Link to="/forgot-password" className="text-sm text-blue-700 hover:underline">
               Forgot Password?
             </Link>
