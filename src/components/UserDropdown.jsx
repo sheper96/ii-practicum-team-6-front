@@ -75,6 +75,12 @@ const UserDropdown = () => {
             >
               My Profile
             </Link>
+            <Link
+                to="/projects/new"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
+              Create Project
+            </Link>
 
             <button
               onClick={handleLogout}
