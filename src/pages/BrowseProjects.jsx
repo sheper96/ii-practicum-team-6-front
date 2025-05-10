@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import Select from 'react-select';
 import ProjectCard from '../components/ProjectCard.jsx';
 import {FiRefreshCcw, FiChevronLeft, FiChevronRight} from 'react-icons/fi';
+import useProjects from '../hooks/useProjects';
 
 const BrowseProjects = () => {
   const DEFAULT_SORT = {value: 'newest'};
@@ -10,54 +11,27 @@ const BrowseProjects = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTags, setSelectedTags] = useState([]);
   const [sortBy, setSortBy] = useState(DEFAULT_SORT);
-  const [projects, setProjects] = useState([
-    {
-      id: 1,
-      title: 'Code Crew',
-      description: 'Build a project collaboration to help find partners for Code The Dream projects.',
-      likes: 24,
-      contributors: 2,
-      tags: ['CTD', 'Web Dev', 'React'],
-      teamSize: 5,
-      liked: false,
-    },
-    {
-      id: 2,
-      title: 'Data Visualization Dashboard',
-      description: 'Create an interactive dashboard to visualize complex datasets with customizable charts and filters.',
-      likes: 18,
-      contributors: 3,
-      tags: ['Data Science', 'UI/UX', 'D3.js'],
-      teamSize: 5,
-      liked: false,
-    },
-    {
-      id: 3,
-      title: 'Smart Home Automation System',
-      description: 'Develop a system to control and automate home devices using IoT sensors and machine learning algorithms.',
-      likes: 32,
-      contributors: 4,
-      tags: ['IoT', 'ML', 'Embedded'],
-      teamSize: 6,
-      liked: false,
-    },
-    {
-      id: 4,
-      title: 'Blockchain Voting Platform',
-      description: 'Build a secure and transparent voting platform using blockchain technology for verifiable elections.',
-      likes: 27,
-      contributors: 2,
-      tags: ['Blockchain', 'Security', 'Web3'],
-      teamSize: 4,
-      liked: false,
-    }
-  ]);
+  const {projects, setProjects, isLoading, error} = useProjects({
+    limit: 8,
+    page: 1,
+
+  });
 
   const navigate = useNavigate();
 
   const tagOptions = useMemo(() => {
-    const uniqueTags = [...new Set(projects.flatMap(project => project.tags))];
-    return uniqueTags.map(tag => ({value: tag, label: tag}));
+    const allTags = projects.flatMap(project => project.reqSkills || []);
+    const uniqueTagsMap = new Map();
+    allTags.forEach(tag => {
+      if (!uniqueTagsMap.has(tag._id)) {
+        uniqueTagsMap.set(tag._id, tag);
+      }
+    });
+
+    return Array.from(uniqueTagsMap.values()).map(tag => ({
+      value: tag._id,
+      label: tag.name
+    }));
   }, [projects]);
 
   const sortOptions = [
@@ -72,6 +46,8 @@ const BrowseProjects = () => {
   };
 
   const filteredAndSortedProjects = useMemo(() => {
+    if (!projects.length) return [];
+
     let filtered = projects;
 
     if (searchQuery) {
@@ -83,7 +59,7 @@ const BrowseProjects = () => {
 
     if (selectedTags.length > 0) {
       filtered = filtered.filter(project =>
-          selectedTags.every(tag => project.tags.includes(tag.value))
+          selectedTags.every(tag => project.tags?.includes(tag.value))
       );
     }
 
@@ -92,16 +68,16 @@ const BrowseProjects = () => {
         case 'popular':
           return b.likes - a.likes;
         case 'newest':
-          return b.id - a.id;
+          return new Date(b.createdAt) - new Date(a.createdAt);
         default:
-          return b.id - a.id;
+          return new Date(b.createdAt) - new Date(a.createdAt);
       }
     });
   }, [projects, searchQuery, selectedTags, sortBy]);
 
   const handleLike = (id) => {
     setProjects(projects.map(project =>
-        project.id === id ? {
+        project._id === id ? {
           ...project,
           liked: !project.liked,
           likes: project.liked ? project.likes - 1 : project.likes + 1
@@ -115,6 +91,32 @@ const BrowseProjects = () => {
 
   // Check if any filters are active
   const hasActiveFilters = searchQuery || selectedTags.length > 0 || sortBy.value !== DEFAULT_SORT.value;
+
+  if (isLoading) {
+    return (
+        <section className="py-8 px-4">
+          <div className="max-w-2xl mx-auto mb-8 space-y-4">
+            <h2 className="text-xl font-semibold">Browse Projects</h2>
+            <div className="flex justify-center">
+              <div>Loading projects...</div>
+            </div>
+          </div>
+        </section>
+    );
+  }
+
+  if (error) {
+    return (
+        <section className="py-8 px-4">
+          <div className="max-w-2xl mx-auto mb-8 space-y-4">
+            <h2 className="text-xl font-semibold">Browse Projects</h2>
+            <div className="flex justify-center">
+              <div>Error: {error}</div>
+            </div>
+          </div>
+        </section>
+    );
+  }
 
   return (
       <section className="py-8 px-4">
@@ -176,13 +178,10 @@ const BrowseProjects = () => {
         </div>
 
         <div className="flex justify-center">
-          <div className="max-w-full overflow-x-auto pb-6 scrollbar-hide">
-            <div className="flex space-x-6 px-4 justify-center">
-              {filteredAndSortedProjects.map((project, index) => (
-                  <div
-                      key={project.id}
-                      className={`${index > 0 ? 'hidden' : ''} sm:block ${index > 1 ? 'sm:hidden' : ''} md:block`}
-                  >
+          <div className="max-w-7xl overflow-x-auto pb-6 scrollbar-hide">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-4">
+              {filteredAndSortedProjects.map((project) => (
+                  <div key={project._id}>
                     <ProjectCard
                         project={project}
                         onLike={handleLike}
