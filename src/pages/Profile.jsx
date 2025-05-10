@@ -5,13 +5,10 @@ import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const { user } = useUser();
-  // console.log('Profile User:', user);
   if (!user) return null;
 
   const {
     username,
-    firstName,
-    lastName,
     email,
     country,
     bio,
@@ -51,9 +48,9 @@ const Profile = () => {
                 />
               </svg>
             </div>
-            <h1 className="text-2xl font-bold text-indigo-800 dark:text-white mb-2">
+            {/* <h1 className="text-2xl font-bold text-indigo-800 dark:text-white mb-2">
               {firstName} {lastName}
-            </h1>
+            </h1> */}
             <p className="text-gray-600 dark:text-gray-300 mb-4">@{username}</p>
             <button
               onClick={handleEditProfile}

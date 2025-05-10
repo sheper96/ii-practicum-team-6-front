@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const instance = axios.create({
-  baseURL: 'http://localhost:3000/api/',
+  baseURL: import.meta.env.VITE_BASE_API_URL || 'http://localhost:3000/api',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -31,6 +31,13 @@ const codeCrewAPI = {
   getProject(id) {
     return instance.get(`/projects/${id}`);
   },
+  getProjects(data = {}) {
+    return instance.get('/projects', data);
+  },
+  createProject(data) {
+    return instance.post('/projects', data);
+  },
+
 };
 
 export default codeCrewAPI;
