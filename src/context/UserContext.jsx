@@ -36,7 +36,7 @@ export const UserProvider = ({ children }) => {
         console.log('No active session', err.message);
         setUser(null);
         localStorage.removeItem('user');
-        navigate('/signin');
+        navigate('/');
       }
     };
 
